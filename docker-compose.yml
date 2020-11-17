@@ -1,0 +1,31 @@
+version: "3.2"
+
+services:
+  app:
+    image: &img accounting
+    build:
+      context: .
+    # Loading a default env file
+    env_file: .env
+    ports:
+      - "8000:8000"
+    # Adding volume to avoid rebuilding image after changes
+    volumes:
+      - .:/app
+    # Run debug server
+    command: ["python", "/app/src/manage.py", "runserver", "0.0.0.0:8000"]
+    networks:
+      - app-network
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

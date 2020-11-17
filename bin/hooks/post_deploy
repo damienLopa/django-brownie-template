@@ -1,0 +1,6 @@
+#!/bin/sh
+set -eo pipefail
+
+# migrate db
+/app/src/manage.py migrate
+/app/src/manage.py collectstatic --noinput

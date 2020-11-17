@@ -1,0 +1,15 @@
+#!/bin/sh
+set -eo pipefail
+
+# This script is only meant to be used from the docker image
+
+# run post_deploy hook (database migrations...)
+/app/bin/hooks/post_deploy
+
+# run uwsgi server (replacing current process)
+exec uwsgi --master \
+           --enable-threads \
+           --chdir=/app/src \
+           --wsgi-file=core/wsgi.py \
+           --http-socket=0.0.0.0:5000 \
+           --buffer-size=32768

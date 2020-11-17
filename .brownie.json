@@ -1,0 +1,14 @@
+{
+    "package_installer": [
+        "poetry",
+        "pipfile"
+    ],
+    "use_docker": [
+        "yes",
+        "no"
+    ],
+    "use_aws_s3": [
+        "yes",
+        "no"
+    ]
+}
